@@ -48,3 +48,12 @@ Temporary Items
 build
 new
 /dist/
+
+target/
+.idea/
+.settings/
+assets/misc
+.classpath
+.project
+.DS_Store
+*.iml
