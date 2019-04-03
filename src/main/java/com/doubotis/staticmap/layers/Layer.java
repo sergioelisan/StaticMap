@@ -17,8 +17,9 @@
  */
 package com.doubotis.staticmap.layers;
 
-import com.doubotis.staticmap.StaticMap;
 import java.awt.Graphics2D;
+
+import com.doubotis.staticmap.StaticMap;
 
 /**
  *
