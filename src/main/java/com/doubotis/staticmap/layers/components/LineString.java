@@ -65,6 +65,7 @@ public class LineString implements Layer {
     }
 
     @Override
+    // public void draw(ImageProcessor ip, StaticMap mp) {
     public void draw(Graphics2D graphics, StaticMap mp) {
         MercatorProjection proj = mp.getProjection();
 
@@ -83,6 +84,7 @@ public class LineString implements Layer {
             // Draw Outline
             BasicStroke sOutline = new BasicStroke(mOutlineWidth + mStrokeWidth, BasicStroke.CAP_ROUND,
                     BasicStroke.JOIN_ROUND);
+
             graphics.setColor(mOutlineColor);
             graphics.setStroke(sOutline);
             graphics.drawPolyline(xPoints, yPoints, mPath.getSize());
@@ -93,7 +95,6 @@ public class LineString implements Layer {
         graphics.setColor(mStrokeColor);
         graphics.setStroke(sCenter);
         graphics.drawPolyline(xPoints, yPoints, mPath.getSize());
-
     }
 
 }

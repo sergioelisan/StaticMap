@@ -59,11 +59,10 @@ public class Marker implements Layer {
     }
 
     @Override
+    // public void draw(ImageProcessor ip, StaticMap mp) {
     public void draw(Graphics2D graphics, StaticMap mp) {
         int width = mImage.getWidth(null);
         int height = mImage.getHeight(null);
-
-        System.out.println("width: " + width + ", height: " + height);
 
         PointF base = mp.getProjection().unproject(mLocation, mp.getZoom());
         PointF origin = new PointF(base.x - mp.getOffset().x, base.y - mp.getOffset().y);

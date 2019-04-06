@@ -25,6 +25,8 @@ import com.doubotis.staticmap.geo.LocationBounds;
 import com.doubotis.staticmap.geo.PointF;
 import com.doubotis.staticmap.geo.projection.MercatorProjection;
 
+import ij.process.ImageProcessor;
+
 /**
  *
  * @author Christophe
@@ -90,9 +92,11 @@ public class WMSLayer extends TMSLayer {
     }
 
     @Override
+    // public void draw(ImageProcessor ip, StaticMap mp) {
     public void draw(Graphics2D graphics, StaticMap mp) {
         mMapPicture = mp;
         super.draw(graphics, mp);
+        // super.draw(ip, mp);
     }
 
 }

@@ -28,6 +28,10 @@ import com.doubotis.staticmap.geo.Tile;
 import com.doubotis.staticmap.geo.projection.MercatorProjection;
 import com.doubotis.staticmap.layers.Layer;
 
+import ij.ImagePlus;
+import ij.gui.Roi;
+import ij.process.ImageProcessor;
+
 /**
  *
  * @author Christophe
@@ -48,6 +52,7 @@ public abstract class TileLayer implements Layer {
     public abstract Image getTile(int tileX, int tileY, int tileZ);
 
     @Override
+    // public void draw(ImageProcessor ip, StaticMap mp) {
     public void draw(Graphics2D graphics, StaticMap mp) {
         // Apply opacity
         float alpha = getOpacity();
@@ -90,6 +95,8 @@ public abstract class TileLayer implements Layer {
                 PointF tilePos = new PointF(truePos.x - mp.getOffset().x, truePos.y - mp.getOffset().y);
 
                 // Draw the tile.
+                // ip.drawRoi(new Roi((int) tilePos.x, (int) tilePos.y, new ImagePlus("tile",
+                // im)));
                 graphics.drawImage(im, (int) tilePos.x, (int) tilePos.y, tileSize, tileSize, null);
 
                 i++;

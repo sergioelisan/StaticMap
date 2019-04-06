@@ -19,6 +19,7 @@ package com.doubotis.staticmap;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -36,6 +37,11 @@ import com.doubotis.staticmap.geo.projection.MercatorProjection;
 import com.doubotis.staticmap.layers.Layer;
 import com.doubotis.staticmap.layers.TMSLayer;
 
+import ij.IJ;
+import ij.ImagePlus;
+import ij.gui.Roi;
+import ij.process.ImageProcessor;
+
 /**
  * Core class of the StaticMAp library. Serves the final results.
  */
@@ -45,11 +51,11 @@ public class StaticMap {
     private int mZoom = 3;
     private int mWidth;
     private int mHeight;
-    
+
     private BufferedImage mImage;
     private MercatorProjection mProjection;
     private List<Layer> mLayers;
-    
+
     private PointF mOffset;
 
     /** Build a static map with the specified width and height. In pixels. */
@@ -159,13 +165,16 @@ public class StaticMap {
         return mOffset;
     }
 
-    private void prepare(Graphics2D graphics) {
+    private void prepare() {
         mOffset = computeRatioPixels(getZoom());
-
     }
 
     private void proceedDraw() {
         mImage = new BufferedImage(mWidth, mHeight, BufferedImage.TYPE_INT_ARGB);
+
+        // ImagePlus imp = new ImagePlus("map", mImage);
+        // ImageProcessor ip = imp.getProcessor();
+        // ip.setAntialiasedText(true);
 
         Graphics2D graphics = mImage.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -175,13 +184,16 @@ public class StaticMap {
         graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
         graphics.setBackground(Color.WHITE);
+        // ip.setColor(Color.WHITE);
         graphics.setColor(Color.WHITE);
+        // ip.fill(new Roi(0, 0, mWidth, mHeight));
         graphics.fillRect(0, 0, mWidth, mHeight);
 
-        prepare(graphics);
+        prepare();
 
         for (Layer layer : mLayers) {
             layer.draw(graphics, this);
+            // layer.draw(ip, this);
         }
     }
 
