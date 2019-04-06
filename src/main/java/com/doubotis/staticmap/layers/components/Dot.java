@@ -71,13 +71,19 @@ public class Dot implements Layer {
         int x = (int) (pixelsLocation.x - mp.getOffset().x);
         int y = (int) (pixelsLocation.y - mp.getOffset().y);
 
+        int center_x = x - ((mOutlineWidth + mStrokeWidth) / 2);
+        int center_y = y - ((mOutlineWidth + mStrokeWidth) / 2);
+
         graphics.setColor(mOutlineColor);
-        graphics.drawOval(x, y, mOutlineWidth + mStrokeWidth, mOutlineWidth + mStrokeWidth);
-        graphics.fillOval(x, y, mOutlineWidth + mStrokeWidth, mOutlineWidth + mStrokeWidth);
+        graphics.drawOval(center_x, center_y, mOutlineWidth + mStrokeWidth, mOutlineWidth + mStrokeWidth);
+        graphics.fillOval(center_x, center_y, mOutlineWidth + mStrokeWidth, mOutlineWidth + mStrokeWidth);
+
+        center_x = x - (mStrokeWidth / 2);
+        center_y = y - (mStrokeWidth / 2);
 
         graphics.setColor(mStrokeColor);
-        graphics.drawOval(x, y, mStrokeWidth, mStrokeWidth);
-        graphics.fillOval(x, y, mStrokeWidth, mStrokeWidth);
+        graphics.drawOval(center_x, center_y, mStrokeWidth, mStrokeWidth);
+        graphics.fillOval(center_x, center_y, mStrokeWidth, mStrokeWidth);
     }
 
 }
