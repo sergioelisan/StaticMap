@@ -8,7 +8,6 @@ package com.doubotis.staticmap.layers;
 import com.doubotis.staticmap.layers.Layer;
 
 /**
- *
  * @author cbrasseur
  */
 public abstract class Control implements Layer {

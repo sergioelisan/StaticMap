@@ -18,7 +18,6 @@
 package com.doubotis.staticmap.geo;
 
 /**
- *
  * @author Admin
  */
 class MathUtils {

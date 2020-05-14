@@ -35,11 +35,6 @@ public class Location {
         dist = MathUtils.rad2deg(dist);
         dist = dist * 60 * 1.1515 * 1609.344;
 
-        /*
-         * if (unit == 'K') { dist = dist * 1.609344; } else if (unit == 'N') { dist =
-         * dist * 0.8684; }
-         */
-
         float floatdist = (float) dist;
 
         if (Float.isNaN(floatdist) || Float.isInfinite(floatdist)) {

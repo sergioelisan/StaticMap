@@ -18,8 +18,6 @@
 package com.doubotis.staticmap;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -36,11 +34,6 @@ import com.doubotis.staticmap.geo.PointF;
 import com.doubotis.staticmap.geo.projection.MercatorProjection;
 import com.doubotis.staticmap.layers.Layer;
 import com.doubotis.staticmap.layers.TMSLayer;
-
-import ij.IJ;
-import ij.ImagePlus;
-import ij.gui.Roi;
-import ij.process.ImageProcessor;
 
 /**
  * Core class of the StaticMAp library. Serves the final results.
@@ -119,23 +112,23 @@ public class StaticMap {
 
     /** Convert WGS84 coordinates to point on the map. */
     public PointF fromLatLngToPoint(double lat, double lng, int zoom) {
-        final PointF offset = getOffset();
+        final var offset = getOffset();
 
-        Location loc = new Location(lat, lng);
-        PointF pt = getProjection().unproject(loc, zoom);
+        var loc = new Location(lat, lng);
+        var pt = getProjection().unproject(loc, zoom);
 
-        PointF offsetDone = new PointF(pt.x - offset.x, pt.y - offset.y);
+        var offsetDone = new PointF(pt.x - offset.x, pt.y - offset.y);
         return offsetDone;
     }
 
     /** convert point on the map to WGS84 coordinates. */
     public Location fromPointToLatLng(PointF pt, int zoom) {
-        final PointF offset = getOffset();
+        final var offset = getOffset();
 
         // Offset the point for computation.
-        final PointF thePoint = new PointF(pt.x + offset.x, pt.y + offset.y);
+        final var thePoint = new PointF(pt.x + offset.x, pt.y + offset.y);
 
-        Location result = getProjection().project(thePoint, zoom);
+        var result = getProjection().project(thePoint, zoom);
         return result;
     }
 
@@ -176,7 +169,7 @@ public class StaticMap {
         // ImageProcessor ip = imp.getProcessor();
         // ip.setAntialiasedText(true);
 
-        Graphics2D graphics = mImage.createGraphics();
+        var graphics = mImage.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         graphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -191,7 +184,7 @@ public class StaticMap {
 
         prepare();
 
-        for (Layer layer : mLayers) {
+        for (var layer : mLayers) {
             layer.draw(graphics, this);
             // layer.draw(ip, this);
         }
@@ -288,9 +281,7 @@ public class StaticMap {
         // Find which zoom value to set.
         setLocation(bounds.getCenter());
 
-        MercatorProjection mp = getProjection();
-
-        System.out.println("To fit: " + bounds.toString());
+        var mp = getProjection();
 
         int baseZoom = maxZoom;
         boolean inBounds = false;
@@ -302,21 +293,19 @@ public class StaticMap {
                 break;
             }
 
-            PointF rp = computeRatioPixels(baseZoom);
+            var rp = computeRatioPixels(baseZoom);
 
             // Compute?
-            PointF topLeftPixels = new PointF(0 + rp.x, 0 + rp.y);
-            Location topLeftLocation = mp.project(topLeftPixels, baseZoom);
+            var topLeftPixels = new PointF(0 + rp.x, 0 + rp.y);
+            var topLeftLocation = mp.project(topLeftPixels, baseZoom);
 
-            PointF bottomRightPixels = new PointF(mWidth + rp.x, mHeight + rp.y);
-            Location bottomRightLocation = mp.project(bottomRightPixels, baseZoom);
+            var bottomRightPixels = new PointF(mWidth + rp.x, mHeight + rp.y);
+            var bottomRightLocation = mp.project(bottomRightPixels, baseZoom);
 
             // Test if in bounds
-            LocationBounds bboxCalculation = new LocationBounds(topLeftLocation.mLongitude,
-                    bottomRightLocation.mLongitude, topLeftLocation.mLatitude, bottomRightLocation.mLatitude);
+            var bboxCalculation = new LocationBounds(topLeftLocation.mLongitude, bottomRightLocation.mLongitude,
+                    topLeftLocation.mLatitude, bottomRightLocation.mLatitude);
 
-            System.out.println("Trying with " + baseZoom + "...");
-            System.out.println(" - " + bboxCalculation.toString());
             inBounds = bboxCalculation.contains(bounds, true);
         }
 
@@ -325,14 +314,14 @@ public class StaticMap {
     }
 
     private PointF computeRatioPixels(int zoom) {
-        MercatorProjection proj = getProjection();
-        PointF centerPixels = proj.unproject(getLocation(), zoom);
+        var proj = getProjection();
+        var centerPixels = proj.unproject(getLocation(), zoom);
 
         // Le centre en 824, 539 est l'équivalent de 100,100 sur l'image.
         int centerImageX = mWidth / 2;
         int centerImageY = mHeight / 2;
 
-        PointF pixels = new PointF(centerPixels.x - centerImageX, centerPixels.y - centerImageY);
+        var pixels = new PointF(centerPixels.x - centerImageX, centerPixels.y - centerImageY);
 
         return pixels;
     }

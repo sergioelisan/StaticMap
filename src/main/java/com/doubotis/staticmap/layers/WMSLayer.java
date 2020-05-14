@@ -23,9 +23,6 @@ import com.doubotis.staticmap.StaticMap;
 import com.doubotis.staticmap.geo.Location;
 import com.doubotis.staticmap.geo.LocationBounds;
 import com.doubotis.staticmap.geo.PointF;
-import com.doubotis.staticmap.geo.projection.MercatorProjection;
-
-import ij.process.ImageProcessor;
 
 /**
  *
@@ -55,9 +52,9 @@ public class WMSLayer extends TMSLayer {
     @Override
     protected String buildURL(int tileX, int tileY, int tileZ) {
 
-        MercatorProjection proj = mMapPicture.getProjection();
+        var proj = mMapPicture.getProjection();
 
-        String pattern = "";
+        var pattern = "";
         pattern += mHost;
         pattern += "?service=WMS&version=1.1.1&request=GetMap&Layers=";
         for (int i = 0; i < mLayers.length; i++) {
@@ -69,14 +66,13 @@ public class WMSLayer extends TMSLayer {
         // Compute locations corners.
         double lat = latitudeFromTile(tileY, tileZ);
         double lon = longitudeFromTile(tileX, tileZ);
-        Location topLeftLocation = new Location(lat, lon);
+        var topLeftLocation = new Location(lat, lon);
 
-        PointF topLeftCorner = proj.unproject(topLeftLocation, tileZ);
-        PointF bottomRightCorner = new PointF(topLeftCorner.x + proj.getTileSize(),
-                topLeftCorner.y + proj.getTileSize());
-        Location bottomRightLocation = proj.project(bottomRightCorner, tileZ);
+        var topLeftCorner = proj.unproject(topLeftLocation, tileZ);
+        var bottomRightCorner = new PointF(topLeftCorner.x + proj.getTileSize(), topLeftCorner.y + proj.getTileSize());
+        var bottomRightLocation = proj.project(bottomRightCorner, tileZ);
 
-        LocationBounds bounds = new LocationBounds(topLeftLocation.getLongitude(), bottomRightLocation.getLongitude(),
+        var bounds = new LocationBounds(topLeftLocation.getLongitude(), bottomRightLocation.getLongitude(),
                 topLeftLocation.getLatitude(), bottomRightLocation.getLatitude());
 
         pattern += "&Styles=&SRS=EPSG:4326";
@@ -96,7 +92,6 @@ public class WMSLayer extends TMSLayer {
     public void draw(Graphics2D graphics, StaticMap mp) {
         mMapPicture = mp;
         super.draw(graphics, mp);
-        // super.draw(ip, mp);
     }
 
 }

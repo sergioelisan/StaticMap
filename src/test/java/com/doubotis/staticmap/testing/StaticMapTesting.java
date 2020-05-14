@@ -30,7 +30,6 @@ import com.doubotis.staticmap.layers.components.LineString;
 import org.junit.Test;
 
 /**
- *
  * @author Admin
  */
 public class StaticMapTesting {
@@ -75,7 +74,7 @@ public class StaticMapTesting {
 
             LocationPath path = new LocationPath();
             path.addLocation(new Location(-8.046506880246506, -34.87865674486085));
-            
+
             LineString layer = new LineString(path);
             layer.strokeColor(Color.BLUE);
             layer.strokeWidth(16);

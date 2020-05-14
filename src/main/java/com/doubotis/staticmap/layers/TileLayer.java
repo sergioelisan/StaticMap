@@ -25,12 +25,6 @@ import com.doubotis.staticmap.StaticMap;
 import com.doubotis.staticmap.geo.Location;
 import com.doubotis.staticmap.geo.PointF;
 import com.doubotis.staticmap.geo.Tile;
-import com.doubotis.staticmap.geo.projection.MercatorProjection;
-import com.doubotis.staticmap.layers.Layer;
-
-import ij.ImagePlus;
-import ij.gui.Roi;
-import ij.process.ImageProcessor;
 
 /**
  *
@@ -56,43 +50,43 @@ public abstract class TileLayer implements Layer {
     public void draw(Graphics2D graphics, StaticMap mp) {
         // Apply opacity
         float alpha = getOpacity();
-        AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+        var composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
         graphics.setComposite(composite);
 
-        MercatorProjection proj = mp.getProjection();
+        var proj = mp.getProjection();
         int tileSize = proj.getTileSize();
 
         int tileZ = mp.getZoom();
 
         // Get the top left point.
-        PointF topLeftPixels = new PointF(0 + mp.getOffset().x, 0 + mp.getOffset().y);
-        Location topLeftLocation = proj.project(topLeftPixels, mp.getZoom());
-        Tile topLeftTile = new Tile(tileXFromLongitude(topLeftLocation.getLongitude(), mp.getZoom()),
+        var topLeftPixels = new PointF(0 + mp.getOffset().x, 0 + mp.getOffset().y);
+        var topLeftLocation = proj.project(topLeftPixels, mp.getZoom());
+        var topLeftTile = new Tile(tileXFromLongitude(topLeftLocation.getLongitude(), mp.getZoom()),
                 tileYFromLatitude(topLeftLocation.getLatitude(), mp.getZoom()), mp.getZoom());
 
         // Get the bottom right point.
-        PointF bottomRightPixels = new PointF(mp.getWidth() + mp.getOffset().x, mp.getHeight() + mp.getOffset().y);
-        Location bottomRightLocation = proj.project(bottomRightPixels, mp.getZoom());
-        Tile bottomRightTile = new Tile(tileXFromLongitude(bottomRightLocation.getLongitude(), mp.getZoom()),
+        var bottomRightPixels = new PointF(mp.getWidth() + mp.getOffset().x, mp.getHeight() + mp.getOffset().y);
+        var bottomRightLocation = proj.project(bottomRightPixels, mp.getZoom());
+        var bottomRightTile = new Tile(tileXFromLongitude(bottomRightLocation.getLongitude(), mp.getZoom()),
                 tileYFromLatitude(bottomRightLocation.getLatitude(), mp.getZoom()), mp.getZoom());
 
         // Get the top left corner or the top left tile before looping.
         double topLeftCornerLat = latitudeFromTile(topLeftTile.y, mp.getZoom());
         double topLeftCornerLon = longitudeFromTile(topLeftTile.x, mp.getZoom());
-        Location topLeftLoc = new Location(topLeftCornerLat, topLeftCornerLon);
-        PointF topLeftCorner = proj.unproject(topLeftLoc, mp.getZoom());
+        var topLeftLoc = new Location(topLeftCornerLat, topLeftCornerLon);
+        var topLeftCorner = proj.unproject(topLeftLoc, mp.getZoom());
 
         int i = 0, j = 0;
         for (int y = topLeftTile.y; y <= bottomRightTile.y; y++) {
             for (int x = topLeftTile.x; x <= bottomRightTile.x; x++) {
                 // Get the tile.
-                Image im = getTile(x, y, tileZ);
+                var im = getTile(x, y, tileZ);
 
                 // Get the "true" pos.
-                PointF truePos = new PointF(topLeftCorner.x + (tileSize * i), topLeftCorner.y + (tileSize * j));
+                var truePos = new PointF(topLeftCorner.x + (tileSize * i), topLeftCorner.y + (tileSize * j));
 
                 // Get the pos.
-                PointF tilePos = new PointF(truePos.x - mp.getOffset().x, truePos.y - mp.getOffset().y);
+                var tilePos = new PointF(truePos.x - mp.getOffset().x, truePos.y - mp.getOffset().y);
 
                 // Draw the tile.
                 // ip.drawRoi(new Roi((int) tilePos.x, (int) tilePos.y, new ImagePlus("tile",

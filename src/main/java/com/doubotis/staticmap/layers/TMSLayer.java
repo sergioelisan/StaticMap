@@ -19,9 +19,8 @@ package com.doubotis.staticmap.layers;
 
 import java.awt.Image;
 import java.net.URL;
-import javax.imageio.ImageIO;
 
-import com.doubotis.staticmap.layers.TileLayer;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -38,11 +37,10 @@ public class TMSLayer extends TileLayer {
 
     @Override
     public Image getTile(int tileX, int tileY, int tileZ) {
-
         try {
-            String buildedUrl = buildURL(tileX, tileY, tileZ);
-            URL url = new URL(buildedUrl);
-            Image image = ImageIO.read(url);
+            var buildedUrl = buildURL(tileX, tileY, tileZ);
+            var url = new URL(buildedUrl);
+            var image = ImageIO.read(url);
             return image;
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class TMSLayer extends TileLayer {
     }
 
     protected String buildURL(int tileX, int tileY, int tileZ) {
-        String pattern = mPattern;
+        var pattern = mPattern;
         int subDomainRandom = (int) (Math.random() * SUBDOMAINS.length);
         pattern = pattern.replace("{s}", SUBDOMAINS[subDomainRandom]);
         pattern = pattern.replace("{x}", "" + tileX);

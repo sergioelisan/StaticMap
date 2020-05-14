@@ -32,7 +32,7 @@ public final class MercatorProjection implements GeographicalProjection<PointF> 
         double lat = location.getLatitude();
         double lng = location.getLongitude();
 
-        PointF point = new PointF(0, 0);
+        var point = new PointF(0, 0);
 
         point.x = _pixelOrigin.x + lng * _pixelsPerLonDegree;
 
@@ -49,7 +49,7 @@ public final class MercatorProjection implements GeographicalProjection<PointF> 
 
     @Override
     public Location project(PointF pt, int zoom) {
-        PointF point = new PointF(pt.x, pt.y);
+        var point = new PointF(pt.x, pt.y);
         int numTiles = 1 << zoom;
         point.x = point.x / (double) numTiles;
         point.y = point.y / (double) numTiles;

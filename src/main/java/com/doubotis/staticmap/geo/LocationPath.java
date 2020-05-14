@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- *
  * @author Christophe
  */
 public class LocationPath {

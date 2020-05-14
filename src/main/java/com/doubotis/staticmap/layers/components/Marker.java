@@ -64,10 +64,10 @@ public class Marker implements Layer {
         int width = mImage.getWidth(null);
         int height = mImage.getHeight(null);
 
-        PointF base = mp.getProjection().unproject(mLocation, mp.getZoom());
-        PointF origin = new PointF(base.x - mp.getOffset().x, base.y - mp.getOffset().y);
+        var base = mp.getProjection().unproject(mLocation, mp.getZoom());
+        var origin = new PointF(base.x - mp.getOffset().x, base.y - mp.getOffset().y);
 
-        BufferedImage rotated = getRotatedImage(mRotation, mImage);
+        var rotated = getRotatedImage(mRotation, mImage);
 
         int anchorX = (int) (mAnchor.x);
         int anchorY = (int) (mAnchor.y);
@@ -81,7 +81,7 @@ public class Marker implements Layer {
         int width = source.getWidth(null);
         int height = source.getHeight(null);
 
-        AffineTransform at = new AffineTransform();
+        var at = new AffineTransform();
 
         int middleX = (width / 2)/* - width / 2 */;
         int middleY = (height / 2)/* - height / 2 */;
@@ -97,8 +97,8 @@ public class Marker implements Layer {
         at.translate(-middleX, -middleY);
 
         // draw the image
-        BufferedImage rotated = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = rotated.createGraphics();
+        var rotated = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        var g2d = rotated.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);

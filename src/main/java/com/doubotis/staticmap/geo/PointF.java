@@ -18,8 +18,7 @@
 package com.doubotis.staticmap.geo;
 
 /**
- *
- * @author Christophe
+Ø * @author Christophe
  */
 public final class PointF {
     public double x;

@@ -45,7 +45,7 @@ public class LocationBounds {
 			double ymin = Double.parseDouble(parsed[1]);
 			double xmax = Double.parseDouble(parsed[2]);
 			double ymax = Double.parseDouble(parsed[3]);
-			LocationBounds bbox = new LocationBounds(xmin, xmax, ymin, ymax);
+			var bbox = new LocationBounds(xmin, xmax, ymin, ymax);
 
 			return bbox;
 		} catch (NumberFormatException pee) {
@@ -138,7 +138,7 @@ public class LocationBounds {
 	 */
 	public static LocationBounds enveloppe(Location latLng, long distance) {
 
-		LocationBounds bbox = new LocationBounds(0, 0, 0, 0);
+		var bbox = new LocationBounds(0, 0, 0, 0);
 
 		double[] llcenter = new double[] { latLng.mLatitude, latLng.mLongitude };
 		double latitude = llcenter[0];

@@ -10,8 +10,6 @@ import java.awt.Graphics2D;
 
 import com.doubotis.staticmap.StaticMap;
 import com.doubotis.staticmap.geo.Location;
-import com.doubotis.staticmap.geo.PointF;
-import com.doubotis.staticmap.geo.projection.MercatorProjection;
 import com.doubotis.staticmap.layers.Layer;
 
 /**
@@ -65,9 +63,9 @@ public class Dot implements Layer {
     @Override
     // public void draw(ImageProcessor ip, StaticMap mp) {
     public void draw(Graphics2D graphics, StaticMap mp) {
-        MercatorProjection proj = mp.getProjection();
+        var proj = mp.getProjection();
 
-        PointF pixelsLocation = proj.unproject(mLocation, mp.getZoom());
+        var pixelsLocation = proj.unproject(mLocation, mp.getZoom());
         int x = (int) (pixelsLocation.x - mp.getOffset().x);
         int y = (int) (pixelsLocation.y - mp.getOffset().y);
 

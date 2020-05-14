@@ -10,10 +10,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.doubotis.staticmap.StaticMap;
-import com.doubotis.staticmap.geo.Location;
 import com.doubotis.staticmap.geo.LocationPath;
-import com.doubotis.staticmap.geo.PointF;
-import com.doubotis.staticmap.geo.projection.MercatorProjection;
 import com.doubotis.staticmap.layers.Layer;
 
 /**
@@ -67,23 +64,22 @@ public class LineString implements Layer {
     @Override
     // public void draw(ImageProcessor ip, StaticMap mp) {
     public void draw(Graphics2D graphics, StaticMap mp) {
-        MercatorProjection proj = mp.getProjection();
+        var proj = mp.getProjection();
 
         int[] xPoints = new int[mPath.getSize()];
         int[] yPoints = new int[mPath.getSize()];
 
         for (int i = 0; i < mPath.getSize(); i++) {
-            Location l = mPath.getLocationAtIndex(i);
+            var l = mPath.getLocationAtIndex(i);
 
-            PointF pixelsLocation = proj.unproject(l, mp.getZoom());
+            var pixelsLocation = proj.unproject(l, mp.getZoom());
             xPoints[i] = (int) (pixelsLocation.x - mp.getOffset().x);
             yPoints[i] = (int) (pixelsLocation.y - mp.getOffset().y);
         }
 
         if (mOutlineWidth > 0) {
             // Draw Outline
-            BasicStroke sOutline = new BasicStroke(mOutlineWidth + mStrokeWidth, BasicStroke.CAP_ROUND,
-                    BasicStroke.JOIN_ROUND);
+            var sOutline = new BasicStroke(mOutlineWidth + mStrokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
             graphics.setColor(mOutlineColor);
             graphics.setStroke(sOutline);
@@ -91,7 +87,7 @@ public class LineString implements Layer {
         }
 
         // Draw Center line
-        BasicStroke sCenter = new BasicStroke(mStrokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        var sCenter = new BasicStroke(mStrokeWidth, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         graphics.setColor(mStrokeColor);
         graphics.setStroke(sCenter);
         graphics.drawPolyline(xPoints, yPoints, mPath.getSize());

@@ -21,16 +21,12 @@ import java.awt.Graphics2D;
 
 import com.doubotis.staticmap.StaticMap;
 
-import ij.process.ImageProcessor;
-
 /**
- *
  * @author Christophe
  */
 public interface Layer {
 
     /** Proceed to draw of the layer. Must be overrided for child classes. */
     public void draw(Graphics2D graphics, StaticMap mp);
-    // public void draw(ImageProcessor ip, StaticMap mp);
 
 }
